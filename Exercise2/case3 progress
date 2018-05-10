@@ -1,0 +1,43 @@
+
+      
+      case 3: 				
+				System.out.println("Enter client's ID code:");
+				String idInput = in.next();
+				
+				int check3 = 0;
+				
+				for (int i = 0 ; i < hotelClient.size(); i++){
+					
+					
+					if (hotelClient.get(i).getId() == idInput) {
+					
+						check3 = 1;
+					
+						break;
+					}
+			}
+				
+		
+			
+			if(check3 == 0){
+				
+				System.out.println("This ID code doesn't exist.");
+				//hotelClient= idInput;
+				
+			}else {
+				
+				break;
+			}
+			
+			System.out.println("Enter Client's First_Name: ");
+			String first_nameInput = in.next();
+			System.out.println("Enter Client's Last_Name: ");
+			String last_nameInput = in.next();
+			System.out.println("Enter Client's Address: ");
+			String addressInput = in.next();
+			System.out.println("Enter Client's Telephone: ");
+			int telephoneInput = in.nextInt();
+			Client cl1 = new Client(idInput, first_nameInput, last_nameInput, addressInput, telephoneInput);
+			
+			//hotelClient[indexClient] = new Client(idInput, first_nameInput, last_nameInput, addressInput, telephoneInput);
+			indexClient++;
