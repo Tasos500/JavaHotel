@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.text.ParseException;
 
 public class HotelReservationSystem {
 	
@@ -11,6 +14,10 @@ public class HotelReservationSystem {
 		StandardRoom[] hotelStandard = new StandardRoom[100];
 		String[] codeList = new String[100];
 		String[] roomList = new String[100];
+		String datePattern = "dd/MM/yyyy";
+		SimpleDateFormat df = new SimpleDateFormat(datePattern);
+		String resInDate;
+		String resOutDate;
 		int sRoomNum = 0;
 		int indexAmenity = 0;
 		int roomNum = 0;
@@ -114,7 +121,28 @@ public class HotelReservationSystem {
 				
 				break;
 			case 4:
-				
+				//Input of check-in date.
+				System.out.println("Enter date of check-in (DD/MM/YYYY): ");
+				//Check of date format.
+				try
+				{
+					resInDate = in.next();
+					Date inDate = df.parse(resInDate);
+				}catch (ParseException e)
+				{
+					e.printStackTrace();
+				}
+				//Repeat for check-out date.
+				System.out.println("Enter date of check-out (DD/MM/YYYY): ");
+				try
+				{
+				resOutDate = in.next();
+				Date outDate = df.parse(resOutDate);
+				}catch (ParseException e)
+				{
+					e.printStackTrace();
+				}
+				//TODO: Check for reserved rooms.
 				break;
 			case 5:
 				
