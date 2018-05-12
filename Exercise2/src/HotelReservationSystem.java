@@ -12,13 +12,21 @@ public class HotelReservationSystem {
 		Scanner in = new Scanner (System.in);
 		Amenity[] hotelAmenity = new Amenity[100];
 		StandardRoom[] hotelStandard = new StandardRoom[100];
+		SuperiorRoom[] hotelSuperior = new SuperiorRoom[100];
 		String[] codeList = new String[100];
 		String[] roomList = new String[100];
+		int roomFloor;
+		int roomCap;
+		String roomAmenities;
+		double roomPrice;
 		String datePattern = "dd/MM/yyyy";
+		String roomInput;
+		int roomCheck;
 		SimpleDateFormat df = new SimpleDateFormat(datePattern);
 		String resInDate;
 		String resOutDate;
-		int sRoomNum = 0;
+		int stRoomNum = 0;
+		int suRoomNum = 0;
 		int indexAmenity = 0;
 		int roomNum = 0;
 		int menuInput = 69;
@@ -86,8 +94,8 @@ public class HotelReservationSystem {
 				{
 					case 'a':
 						System.out.println("Enter Room Number: ");
-						String roomInput = in.next();
-						int roomCheck = 0;
+						roomInput = in.next();
+						roomCheck = 0;
 						for (int j = 0; j < roomNum; j++)
 						{
 							if (roomList[j].equals(roomInput))
@@ -99,18 +107,42 @@ public class HotelReservationSystem {
 						if (roomCheck == 0)
 						{
 							System.out.println("Enter Floor: ");
-							int roomFloor = in.nextInt();
+							roomFloor = in.nextInt();
 							System.out.println("Enter capacity: ");
-							int roomCap = in.nextInt();
+							roomCap = in.nextInt();
 							System.out.println("Enter price: ");
-							double roomPrice = in.nextDouble();
-							hotelStandard[sRoomNum] = new StandardRoom(roomInput, roomFloor, roomCap, roomPrice);
+							roomPrice = in.nextDouble();
+							hotelStandard[stRoomNum] = new StandardRoom(roomInput, roomFloor, roomCap, roomPrice);
 							roomNum++;
-							sRoomNum++;
+							stRoomNum++;
 						}
 						break;
 					case 'b':
-						
+						System.out.println("Enter Room Number: ");
+						roomInput = in.next();
+						roomCheck = 0;
+						for (int j = 0; j < roomNum; j++)
+						{
+							if (roomList[j].equals(roomInput))
+							{
+								roomCheck = 1;
+								System.out.println("Error: Room already exists.");
+							}
+						}
+						if (roomCheck == 0)
+						{
+							System.out.println("Enter Floor: ");
+							roomFloor = in.nextInt();
+							System.out.println("Enter capacity: ");
+							roomCap = in.nextInt();
+							System.out.println("Enter price: ");
+							roomPrice = in.nextDouble();
+							System.out.println("Enter amenities, separated by commas: ");
+							roomAmenities = in.next();
+							hotelSuperior[suRoomNum] = new SuperiorRoom(roomInput, roomFloor, roomCap, roomPrice, roomAmenities);
+							roomNum++;
+							stRoomNum++;
+						}
 						break;
 					default:
 						System.out.println("Undefined argument.");
