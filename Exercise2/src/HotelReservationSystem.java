@@ -13,8 +13,10 @@ public class HotelReservationSystem {
 		Amenity[] hotelAmenity = new Amenity[100];
 		StandardRoom[] hotelStandard = new StandardRoom[100];
 		SuperiorRoom[] hotelSuperior = new SuperiorRoom[100];
+		Reservation[] hotelReservation = new Reservation[100];
 		String[] codeList = new String[100];
 		String[] roomList = new String[100];
+		String idInput;
 		int roomFloor;
 		int roomCap;
 		String roomAmenities;
@@ -23,8 +25,16 @@ public class HotelReservationSystem {
 		String roomInput;
 		int roomCheck;
 		SimpleDateFormat df = new SimpleDateFormat(datePattern);
-		String resInDate;
-		String resOutDate;
+		String resInDate = "null";
+		String resOutDate = "null";
+		int resCount = 0;
+		boolean resBetween;
+		Date inDate;
+		Date outDate;
+		int resOccupants;
+		String amenityInput;
+		double discountInput;
+		double payoutInput;
 		int stRoomNum = 0;
 		int suRoomNum = 0;
 		int indexAmenity = 0;
@@ -141,7 +151,7 @@ public class HotelReservationSystem {
 							roomAmenities = in.next();
 							hotelSuperior[suRoomNum] = new SuperiorRoom(roomInput, roomFloor, roomCap, roomPrice, roomAmenities);
 							roomNum++;
-							stRoomNum++;
+							suRoomNum++;
 						}
 						break;
 					default:
@@ -159,7 +169,7 @@ public class HotelReservationSystem {
 				try
 				{
 					resInDate = in.next();
-					Date inDate = df.parse(resInDate);
+					inDate = df.parse(resInDate);
 				}catch (ParseException e)
 				{
 					e.printStackTrace();
@@ -169,12 +179,32 @@ public class HotelReservationSystem {
 				try
 				{
 				resOutDate = in.next();
-				Date outDate = df.parse(resOutDate);
+				outDate = df.parse(resOutDate);
 				}catch (ParseException e)
 				{
 					e.printStackTrace();
 				}
-				//TODO: Check for reserved rooms.
+				if (resCount != 0)
+				{
+					//TODO: Check for reserved rooms.
+				}
+				System.out.println("Enter room number from the above: ");
+				roomInput = in.next();
+				System.out.println("Enter number of occupants: ");
+				resOccupants = in.nextInt();
+				//TODO: Check if input occupants are over the max for the chosen room.
+				System.out.println("Enter client ID: ");
+				idInput = in.next();
+				//TODO: Check if ID exists. (After Case 3 is implemented.)
+				System.out.println("Enter codes of requested amenities, separated by comma and space: ");
+				amenityInput = in.next();
+				System.out.println("Enter discount percentage, if applicable (0 means no discount): ");
+				discountInput = in.nextDouble();
+				System.out.println("Enter payout for room: ");
+				payoutInput = in.nextDouble();
+				hotelReservation[resCount] = new Reservation (roomInput, resOccupants, idInput, resInDate, resOutDate, amenityInput, discountInput, payoutInput);
+				resCount++;
+				
 				break;
 			case 5:
 				

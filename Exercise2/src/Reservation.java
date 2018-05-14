@@ -1,7 +1,7 @@
 
 public class Reservation {
 	
-	private int room_number;
+	private String room_number;
 	private int occupants;
 	private String client_name;
 	private String check_in;
@@ -10,7 +10,7 @@ public class Reservation {
 	private double discount;
 	private double payout;
 
-	Reservation(int room_number, int occupants, String client_name, String check_in, String check_out, double discount, double payout){
+	Reservation(String room_number, int occupants, String client_name, String check_in, String check_out, String amenities, double discount, double payout){
 		this.setRoom_number(room_number);
 		this.setOccupants(occupants);
 		this.setCheck_in(check_in);
@@ -18,14 +18,15 @@ public class Reservation {
 		this.setClient_name(client_name);
 		this.setDiscount(discount);
 		this.setPayout(payout);
+		this.setAmenities(amenities);
 	}
 	
-		public void setRoom_number(int room_number) {
+		public void setRoom_number(String room_number) {
 		
 			this.room_number = room_number;
 		}
 	
-		public int getRoom_number() {
+		public String getRoom_number() {
 		
 			return room_number;
 		}
