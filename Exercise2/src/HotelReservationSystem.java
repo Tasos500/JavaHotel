@@ -1,50 +1,24 @@
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Scanner;
-import java.text.ParseException;
+
 
 public class HotelReservationSystem {
 	
 	public static void main(String [] ags) 
 	{
 		Scanner in = new Scanner (System.in);
-		Amenity[] hotelAmenity = new Amenity[100];
-		StandardRoom[] hotelStandard = new StandardRoom[100];
-		SuperiorRoom[] hotelSuperior = new SuperiorRoom[100];
-		Reservation[] hotelReservation = new Reservation[100];
-		String[] codeList = new String[100];
-		String[] roomList = new String[100];
-		String idInput;
-		int roomFloor;
-		int roomCap;
-		String roomAmenities;
-		double roomPrice;
-		String datePattern = "dd/MM/yyyy";
-		String roomInput;
-		int roomCheck;
-		SimpleDateFormat df = new SimpleDateFormat(datePattern);
-		String resInDate = "null";
-		String resOutDate = "null";
-		int resCount = 0;
-		boolean resBetween;
-		Date inDate;
-		Date outDate;
-		int resOccupants;
-		String amenityInput;
-		double discountInput;
-		double payoutInput;
-		int stRoomNum = 0;
-		int suRoomNum = 0;
-		int indexAmenity = 0;
-		int roomNum = 0;
 		int menuInput = 69;
 		char specInput;
+		
+		ArrayList<Amenity> amenityList = new ArrayList<Amenity>(); 
+		ArrayList<Room> roomList = new ArrayList<Room>();
+		ArrayList<Client> clientList = new ArrayList<Client>();
+
+		
 		do
 		{
 		System.out.println("\n[1] Insert Amenity\n[2] Insert Room (Standard or Superior)\n[3] Insert Client\n[4] Book Room\n[5] Cancel Room Reservation\n[6] Order Amenity (Available only in Superior Rooms\n[7] Hotel Capacity\n[8] Room Availability\n[0] Exit");
-		System.out.println("\nYour choice: ");
+		System.out.println("\nInsert your choice: ");
 		menuInput = in.nextInt();
 		switch(menuInput)
 		{
@@ -52,32 +26,26 @@ public class HotelReservationSystem {
 				System.out.println("Enter Amenity Code: ");
 				String codeInput = in.next();
 				
-				int codecheck = 0;		
+				int checkAmenityCode = 0;
 				
-			
-					for(int i = 0 ; i < indexAmenity; i++){
+				for(int i = 0; i < amenityList.size(); i++) {
+										
+					if((((amenityList.get(i))).getCode()).equals(codeInput) ) {
 						
-						if (codeList[i].equals(codeInput)){
-						
-						codecheck = 1;
-						
+						checkAmenityCode = 1;
 						break;
-						
+
 					}
-					
+																								
 				}
-					
 				
-				if (codecheck == 0){
-					codeList[indexAmenity] = codeInput;
+				if(checkAmenityCode == 1) {
 					
-				}else {
-					System.out.println("Error: Code already exists.");
+					System.out.println("\nThis code already exists...");
 					break;
+					
 				}
-					
-					
-					
+				
 				
 				System.out.println("Enter Amenity Category: ");
 				String categoryInput = in.next();
@@ -85,17 +53,12 @@ public class HotelReservationSystem {
 				String descriptionInput = in.next();
 				System.out.println("Enter Amenity Price: ");
 				double aPriceInput = in.nextDouble();
-				hotelAmenity[indexAmenity] = new Amenity(codeInput, categoryInput, descriptionInput, aPriceInput);
-				indexAmenity++;
-				for(int i = 0 ; i < codeList.length; i++){
-					
-					System.out.println(codeList[i]);
-					
-				}
-				
-				
+				Amenity amenity = new Amenity(codeInput,categoryInput,descriptionInput,aPriceInput);
+				amenityList.add(amenity);
 				
 				break;
+				
+
 			case 2:
 				System.out.println("\n[a] Insert a standard room\n[b] Insert a superior room");
 				System.out.println("\nYour choice: ");
@@ -104,106 +67,119 @@ public class HotelReservationSystem {
 				{
 					case 'a':
 						System.out.println("Enter Room Number: ");
-						roomInput = in.next();
-						roomCheck = 0;
-						for (int j = 0; j < roomNum; j++)
-						{
-							if (roomList[j].equals(roomInput))
-							{
+						String roomInput = in.next();
+						int roomCheck = 0;
+						
+						for(int i = 0; i < roomList.size(); i++) {
+							
+							if((((roomList.get(i))).getRoom_code()).equals(roomInput) ) {
+								
 								roomCheck = 1;
-								System.out.println("Error: Room already exists.");
+								break;
+
 							}
+																										
 						}
-						if (roomCheck == 0)
-						{
-							System.out.println("Enter Floor: ");
-							roomFloor = in.nextInt();
-							System.out.println("Enter capacity: ");
-							roomCap = in.nextInt();
-							System.out.println("Enter price: ");
-							roomPrice = in.nextDouble();
-							hotelStandard[stRoomNum] = new StandardRoom(roomInput, roomFloor, roomCap, roomPrice);
-							roomNum++;
-							stRoomNum++;
-						}
+						
+						if(roomCheck == 1) {
+							
+							System.out.println("\nThis room code already exists...");
+							break;
+							
+						}					
+						
+						System.out.println("Enter Floor: ");
+						int floorInput = in.nextInt();
+						System.out.println("Enter Capacity (1-2-3-4) : ");
+						int capacityInput = in.nextInt();
+						System.out.println("Enter Price: ");
+						double priceInput = in.nextDouble();
+						StandardRoom standard_room= new StandardRoom(roomInput,floorInput,capacityInput,priceInput);
+						roomList.add(standard_room);
+						
 						break;
+						
+						
 					case 'b':
 						System.out.println("Enter Room Number: ");
-						roomInput = in.next();
-						roomCheck = 0;
-						for (int j = 0; j < roomNum; j++)
-						{
-							if (roomList[j].equals(roomInput))
-							{
-								roomCheck = 1;
-								System.out.println("Error: Room already exists.");
+						String superior_roomInput = in.next();
+						int superior_roomCheck = 0;
+						
+						for(int i = 0; i < roomList.size(); i++) {
+							
+							if((((roomList.get(i))).getRoom_code()).equals(superior_roomInput) ) {
+								
+								superior_roomCheck = 1;
+								break;
+
 							}
+																										
 						}
-						if (roomCheck == 0)
-						{
-							System.out.println("Enter Floor: ");
-							roomFloor = in.nextInt();
-							System.out.println("Enter capacity: ");
-							roomCap = in.nextInt();
-							System.out.println("Enter price: ");
-							roomPrice = in.nextDouble();
-							System.out.println("Enter amenities, separated by commas: ");
-							roomAmenities = in.next();
-							hotelSuperior[suRoomNum] = new SuperiorRoom(roomInput, roomFloor, roomCap, roomPrice, roomAmenities);
-							roomNum++;
-							suRoomNum++;
-						}
+						
+						if(superior_roomCheck == 1) {
+							
+							System.out.println("\nThis room code already exists...");
+							break;
+							
+						}					
+						
+						System.out.println("Enter Floor: ");
+						int floorInput1 = in.nextInt();
+						System.out.println("Enter Capacity (1-2-3-4) : ");
+						int capacityInput1 = in.nextInt();
+						System.out.println("Enter Price: ");
+						double priceInput1 = in.nextDouble();
+						System.out.println("Enter Amenities: ");
+						String amenitiesInput = in.next();
+						SuperiorRoom superior_room = new SuperiorRoom(superior_roomInput,floorInput1,capacityInput1,priceInput1,amenitiesInput);
+						roomList.add(superior_room);
+						
 						break;
 					default:
 						System.out.println("Undefined argument.");
 						break;
 				}
 				break;
+				
+				
 			case 3:
+				System.out.println("Enter client's ID code:");
+				String idInput = in.next();
+				int idCheck = 0;
+				
+				for(int i = 0; i < clientList.size(); i++) {
+					
+					if((((clientList.get(i))).getId()).equals(idInput) ) {
+						
+						idCheck = 1;
+						break;
+
+					}
+																								
+				}
+				
+				if(idCheck == 1) {
+					
+					System.out.println("\nThis client already exists...");
+					break;
+					
+				}					
+				
+				System.out.println("Enter Client's First_Name: ");
+				String first_nameInput = in.next();
+				System.out.println("Enter Client's Last_Name: ");
+				String last_nameInput = in.next();
+				System.out.println("Enter Client's Address: ");
+				String addressInput = in.next();
+				System.out.println("Enter Client's Telephone: ");
+				int telephoneInput = in.nextInt();
+				Client client = new Client(idInput, first_nameInput, last_nameInput, addressInput, telephoneInput);
+				clientList.add(client);
 				
 				break;
+				
 			case 4:
-				//Input of check-in date.
-				System.out.println("Enter date of check-in (DD/MM/YYYY): ");
-				//Check of date format.
-				try
-				{
-					resInDate = in.next();
-					inDate = df.parse(resInDate);
-				}catch (ParseException e)
-				{
-					e.printStackTrace();
-				}
-				//Repeat for check-out date.
-				System.out.println("Enter date of check-out (DD/MM/YYYY): ");
-				try
-				{
-				resOutDate = in.next();
-				outDate = df.parse(resOutDate);
-				}catch (ParseException e)
-				{
-					e.printStackTrace();
-				}
-				if (resCount != 0)
-				{
-					//TODO: Check for reserved rooms.
-				}
-				System.out.println("Enter room number from the above: ");
-				roomInput = in.next();
-				System.out.println("Enter number of occupants: ");
-				resOccupants = in.nextInt();
-				//TODO: Check if input occupants are over the max for the chosen room.
-				System.out.println("Enter client ID: ");
-				idInput = in.next();
-				//TODO: Check if ID exists. (After Case 3 is implemented.)
-				System.out.println("Enter codes of requested amenities, separated by comma and space: ");
-				amenityInput = in.next();
-				System.out.println("Enter discount percentage, if applicable (0 means no discount): ");
-				discountInput = in.nextDouble();
-				System.out.println("Enter payout for room: ");
-				payoutInput = in.nextDouble();
-				hotelReservation[resCount] = new Reservation (roomInput, resOccupants, idInput, resInDate, resOutDate, amenityInput, discountInput, payoutInput);
-				resCount++;
+				
 				
 				break;
 			case 5:
